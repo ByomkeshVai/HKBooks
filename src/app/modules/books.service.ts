@@ -66,7 +66,7 @@ const createBooks = async (payload: TBooks) => {
         const sortOptions: { [key: string]: any } = {};
         if (sort) sortOptions[sort as string] = order === 'DESC' ? -1 : 1;
         if (!sort && !order) {
-            sortOptions['customId'] = 1;
+            sortOptions['id'] = 1;
         }
 
         const result = await Book.find(filter).sort(sortOptions);
