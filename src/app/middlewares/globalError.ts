@@ -69,7 +69,6 @@ const globalError: ErrorRequestHandler = (errorDetails, req, res, next) => {
     success: false,
     message,
     statusCode
-
   });
 };
 
