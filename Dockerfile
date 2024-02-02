@@ -1,26 +1,22 @@
-FROM node:16-alpine as development
+FROM node:16-alpine
 
+# Set the working directory
 WORKDIR /usr/src/app
 
-COPY package*.json .
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
+# Install dependencies
 RUN npm install
 
+# Bundle app source
 COPY . .
 
+# Build the application
 RUN npm run build
 
-FROM node:16-alpine as production
+# Expose the port the app runs on
+EXPOSE 6000
 
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json .
-
-RUN npm ci --only=production
-
-COPY --from=development /usr/src/app/dist ./dist
-
+# Define the command to run the app
 CMD ["node", "dist/index.js"]
