@@ -19,7 +19,7 @@ const createBooks = async (payload: TBooks) => {
     const isBookExist = await Book.isBooksExistsByCustomId(bookId);
 
     if (!isBookExist) {
-      throw new AppError(httpStatus.NOT_FOUND, 'This Book is not found !');
+      throw new AppError(httpStatus.NOT_FOUND, `book with id: ${bookId} was not found !`);
     }
 
     const updateBasicInfo = await Book.findOneAndUpdate({id: bookId}, Payload, {
@@ -42,15 +42,8 @@ const createBooks = async (payload: TBooks) => {
       const bookFind = await Book.findOne({id: bookId});
   
       if (!bookFind) {
-        throw new AppError(httpStatus.BAD_REQUEST, 'Book is not found');
+        throw new AppError(httpStatus.NOT_FOUND, `"book with id: ${bookId} was not found !`);
       }
-  
-      // const genreData = bookFind.toObject();
-  
-      // const result = {
-      //   genres: genreData,
-      // };
-
   
       return bookFind;
     } catch (error: any) {

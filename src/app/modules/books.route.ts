@@ -13,7 +13,7 @@ router.post(
 
 router.put(
   '/books/:bookId',
-  validateRequest(booksValidation.CreatebooksValidation),
+  validateRequest(booksValidation.UpdatebooksValidation),
   BooksController.updateBook,
 );
 

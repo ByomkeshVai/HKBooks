@@ -15,7 +15,6 @@ const sendResponse = <T>(res: Response, data: TResponse<T>) => {
         statusCode: data.statusCode,
         success: data.success,
         message: data.message,
-        meta : data.meta,
         books: data.books
     })
 }
