@@ -21,26 +21,21 @@ const globalError: ErrorRequestHandler = (errorDetails, req, res, next) => {
     const simplifiedError = zodError(errorDetails);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorMessage = simplifiedError?.errorMessage;
   } else if (errorDetails?.name === 'ValidationError') {
     const simplifiedError = validateError(errorDetails);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorMessage = simplifiedError?.errorSources;
   } else if (errorDetails?.name === 'CastError') {
     const simplifiedError = handleCastError(errorDetails);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorMessage = simplifiedError?.errorSources;
   } else if (errorDetails?.code == 11000) {
     const simplifiedError = duplicateError(errorDetails);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
-    errorMessage = simplifiedError?.errorSources;
   } else if (errorDetails instanceof AppError) {
     statusCode = errorDetails?.statusCode;
     message = errorDetails.message;
-    errorMessage = errorDetails.message;
   } else if (errorDetails instanceof UnAuthorize) {
     message = 'Unauthorized Access';
     errorMessage =

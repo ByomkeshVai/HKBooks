@@ -10,7 +10,6 @@ const createCalculation = catchAsync(async (req, res) => {
     sendResponse(res, {
       success: true,
       statusCode: 201,
-      message: 'Books created Successfully',
       books: result,
     });
   });
@@ -22,7 +21,6 @@ const createCalculation = catchAsync(async (req, res) => {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Book is updated successfully',
       books: result,
     });
   });
@@ -35,7 +33,6 @@ const createCalculation = catchAsync(async (req, res) => {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Genre retrieved successfully',
       books: result,
     });
   });
@@ -46,7 +43,6 @@ const createCalculation = catchAsync(async (req, res) => {
     sendResponse(res, {
       success: true,
       statusCode: httpStatus.OK,
-      message: 'Books retrieved successfully',
       books: result,
     });
   });

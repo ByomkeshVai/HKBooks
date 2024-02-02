@@ -4,9 +4,14 @@ import Book from "./books.model";
 import AppError from "../errors/AppError";
 
 const createBooks = async (payload: TBooks) => {
-    const result = await Book.create(payload);
-    return result;
-  };
+  const { id, title, author, genre, price } = payload;
+  const existingBook = await Book.findOne({ id });
+  if (existingBook) {
+      throw new AppError(httpStatus.CONFLICT, 'A book with this ID already exists!');
+  }
+  const result = await Book.create({ id, title, author, genre, price });
+  return result;
+};
 
 
   const updateBookIntoDB = async (bookId: string, Payload:  Partial<TBooks>) => {
@@ -23,7 +28,7 @@ const createBooks = async (payload: TBooks) => {
     });
   
     if (!updateBasicInfo) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update Genre!');
+      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update Book!');
     }
   
     return updateBasicInfo;
@@ -57,15 +62,19 @@ const createBooks = async (payload: TBooks) => {
 
   const getAllBooksFromDB = async (query: Record<string, unknown>) => {
     try {
-        const { title, author, genre, sort, order } = query;
+        const { title, author, genre, price, sort, order } = query;
 
         const filter: Record<string, unknown> = {};
         if (title) filter.title = title;
         if (author) filter.author = author;
         if (genre) filter.genre = genre;
+        if (price) filter.price = price;
 
-        const sortOptions: Record<string, unknown> = {};
+        const sortOptions: { [key: string]: any } = {};
         if (sort) sortOptions[sort as string] = order === 'DESC' ? -1 : 1;
+        if (!sort && !order) {
+            sortOptions['customId'] = 1;
+        }
 
         const result = await Book.find(filter).sort(sortOptions);
 
