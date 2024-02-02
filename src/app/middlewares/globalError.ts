@@ -68,9 +68,8 @@ const globalError: ErrorRequestHandler = (errorDetails, req, res, next) => {
   return res.status(statusCode).json({
     success: false,
     message,
-    errorMessage,
-    errorDetails,
-    stack: null,
+    statusCode
+
   });
 };
 
